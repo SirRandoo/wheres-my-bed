@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ModMetaData>
+  <name>Where's My Bed?</name>
+  <author>SirRandoo</author>
+  <description>Adds a nice button to help you find a pawn's bedroom.</description>
+
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
+</ModMetaData>

@@ -2,8 +2,6 @@
 
 using Harmony;
 
-using RimWorld;
-
 using UnityEngine;
 
 using Verse;
@@ -16,34 +14,19 @@ namespace SirRandoo.WheresMyBed.Patches
         [HarmonyPostfix]
         public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)
         {
-            if(__instance != null && __instance.IsColonistPlayerControlled)
+            if(__instance == null || __instance.ownership == null || __instance.ownership.OwnedBed == null)
+                return;
+            if(!__instance.IsColonistPlayerControlled)
+                return;
+
+            __result = __result.Add(new Command_Action
             {
-                foreach(var map in Find.Maps)
-                {
-                    if(!map.IsPlayerHome)
-                        continue;
-
-                    foreach(var thing in map.listerThings.AllThings)
-                    {
-                        if(!(thing is Building_Bed))
-                            continue;
-                        var bed = (Building_Bed) thing;
-
-                        if(bed.owners.Contains(__instance))
-                        {
-                            __result = __result.Add(new Command_Action
-                            {
-                                defaultLabel = "WMB.Gizmo.Label".Translate(),
-                                defaultDesc = "WMB.Gizmo.Description".Translate(),
-                                icon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo"),
-                                activateSound = SoundDef.Named("Click"),
-                                action = delegate { CameraJumper.TryJumpAndSelect(bed); }
-                            });
-                            return;
-                        }
-                    }
-                }
-            }
+                defaultLabel = "WMB.Gizmo.Label".Translate(),
+                defaultDesc = "WMB.Gizmo.Description".Translate(),
+                icon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo"),
+                activateSound = SoundDef.Named("Click"),
+                action = delegate { CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed); }
+            });
         }
     }
 }

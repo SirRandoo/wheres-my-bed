@@ -3,4 +3,13 @@
 <LanguageData>
   <WMB.Gizmo.Label>Where's My Bed?</WMB.Gizmo.Label>
   <WMB.Gizmo.Description>Centers your camera on the selected pawn's bed.</WMB.Gizmo.Description>
+
+  <WMB.Groups.Gizmo.Label>Gizmo Settings</WMB.Groups.Gizmo.Label>
+  <WMB.Groups.Gizmo.Tooltip>Settings in this group relate to the pawn gizmo itself.</WMB.Groups.Gizmo.Tooltip>
+
+  <WMB.Settings.Gizmo.TextEnabled.Label>Draw text on the gizmo.</WMB.Settings.Gizmo.TextEnabled.Label>
+  <WMB.Settings.Gizmo.TextEnabled.Tooltip>Whether or not the gizmo text should be drawn.</WMB.Settings.Gizmo.TextEnabled.Tooltip>
+
+  <WMB.Settings.Gizmo.ActionType.Label>When the gizmo is interacted with, it should</WMB.Settings.Gizmo.ActionType.Label>
+  <WMB.Settings.Gizmo.ActionType.Tooltip>The type of action the gizmo should do when it's interacted with.  The ARROW action will make the gizmo draw an arrow to the pawn's bed if it's on the same map.  The SELECT action will make the gizmo jump to and select the bed.  The JUMP action will make the gizmo jump to the bed.</WMB.Settings.Gizmo.ActionType.Tooltip>
 </LanguageData>

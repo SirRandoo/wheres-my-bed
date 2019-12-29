@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Harmony;
 
@@ -21,11 +22,27 @@ namespace SirRandoo.WheresMyBed.Patches
 
             __result = __result.Add(new Command_Action
             {
-                defaultLabel = "WMB.Gizmo.Label".Translate(),
+                defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
                 defaultDesc = "WMB.Gizmo.Description".Translate(),
                 icon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo"),
                 activateSound = SoundDef.Named("Click"),
-                action = delegate { CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed); }
+                action = delegate
+                {
+                    switch(Enum.Parse(typeof(Actions), Settings.GizmoAction))
+                    {
+                        //case Actions.Arrow:
+                        //    LookTargetsUtility.TryHighlight(__instance.ownership.OwnedBed);
+                        //    break;
+
+                        case Actions.Jump:
+                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed)) CameraJumper.TryJump(__instance.ownership.OwnedBed);
+                            break;
+
+                        case Actions.Select:
+                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed)) CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
+                            break;
+                    }
+                }
             });
         }
     }

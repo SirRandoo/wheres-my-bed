@@ -28,7 +28,10 @@
     <OutputPath>..\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -48,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Patches\Pawn_GetGizmos.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Utils\SettingsHelper.cs" />
     <Compile Include="WMB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

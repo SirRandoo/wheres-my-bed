@@ -5,7 +5,9 @@
   <author>SirRandoo</author>
   <description>Adds a nice button to help you find a pawn's bedroom.</description>
 
+  <packageId>sirrandoo.wmb</packageId>
   <supportedVersions>
     <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
 </ModMetaData>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Harmony;
+using HarmonyLib;
 
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace SirRandoo.WheresMyBed.Patches
             if(!__instance.IsColonistPlayerControlled)
                 return;
 
-            __result = __result.Add(new Command_Action
+            __result = __result.AddItem(new Command_Action
             {
                 defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
                 defaultDesc = "WMB.Gizmo.Description".Translate(),

@@ -16,8 +16,11 @@ namespace SirRandoo.WheresMyBed.Patches
         [HarmonyPostfix]
         public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)
         {
-            if(__instance == null || __instance.ownership == null || __instance.ownership.OwnedBed == null)
+            if(__instance?.ownership?.OwnedBed == null)
+            {
                 return;
+            }
+
             if(!__instance.IsColonistPlayerControlled)
                 return;
 

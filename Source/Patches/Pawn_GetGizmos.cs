@@ -10,7 +10,8 @@ using Verse;
 namespace SirRandoo.WheresMyBed.Patches
 {
     [HarmonyPatch(typeof(Pawn), "GetGizmos")]
-    public static class Pawn_GetGizmos__Postfix
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public static class PawnGetGizmos
     {
         [HarmonyPostfix]
         public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)

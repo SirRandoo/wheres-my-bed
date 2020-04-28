@@ -15,7 +15,7 @@ namespace SirRandoo.WheresMyBed
 
     public class Settings : ModSettings
     {
-        private static Vector2 ScrollPos = Vector2.zero;
+        private static Vector2 _scrollPos = Vector2.zero;
 
         public static bool ShowGizmoText = true;
         public static string GizmoAction = Actions.Select.ToString();
@@ -27,7 +27,7 @@ namespace SirRandoo.WheresMyBed
             var view = new Rect(0f, 0f, canvas.width, 36f * 26f);
             view.xMax *= 0.9f;
 
-            panel.BeginScrollView(canvas, ref ScrollPos, ref view);
+            panel.BeginScrollView(canvas, ref _scrollPos, ref view);
 
             panel.Gap();
             panel.Label("WMB.Groups.Gizmo.Label".Translate(), tooltip: "WMB.Groups.Gizmo.Tooltip");

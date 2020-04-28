@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using UnityEngine;
@@ -52,7 +53,7 @@ namespace SirRandoo.WheresMyBed.Utils
             listing.Gap(listing.verticalSpacing);
         }
 
-        public static void DrawComboBox(Rect rect, string label, Type type, ref string value, Action<string> callback)
+        private static void DrawComboBox(Rect rect, string label, Type type, ref string value, Action<string> callback)
         {
             Widgets.Label(rect, label);
 
@@ -71,13 +72,13 @@ namespace SirRandoo.WheresMyBed.Utils
             }
         }
 
-        public static void DrawDecimalBox(Rect rect, string label, ref decimal value, decimal min = 0M, decimal max = 1E+09M)
+        private static void DrawDecimalBox(Rect rect, string label, ref decimal value, decimal min = 0M, decimal max = 1E+09M)
         {
             Widgets.Label(rect, label);
-            var controlName = $"TextField{rect.y.ToString("F0")}{rect.x.ToString("F0")}";
+            var controlName = $"TextField{rect.y:F0}{rect.x:F0}";
             GUI.SetNextControlName(controlName);
 
-            var buffer = value.ToString();
+            var buffer = value.ToString(CultureInfo.InvariantCulture);
             var result = GUI.TextField(rect, buffer, Text.CurTextFieldStyle);
 
             if(GUI.GetNameOfFocusedControl() != controlName)
@@ -95,18 +96,27 @@ namespace SirRandoo.WheresMyBed.Utils
             }
         }
 
-        public static void MediumGap(this Listing listing) => listing.Gap(12f * 2);
+        public static void MediumGap(this Listing listing)
+        {
+            listing.Gap(12f * 2);
+        }
 
-        private static int CharacterCount(string s, char c) => s.Where(c1 => c1.Equals(c)).Select(c1 => c1).Count();
+        private static int CharacterCount(string s, char c)
+        {
+            return s.Where(c1 => c1.Equals(c)).Select(c1 => c1).Count();
+        }
 
-        private static bool ContainsOnlyCharacters(string s, string characters) => s.Where(c1 => characters.Contains(c1)).Select(c1 => c1).Count() == s.Length;
+        private static bool ContainsOnlyCharacters(string s, string characters)
+        {
+            return s.Where(characters.Contains).Select(c1 => c1).Count() == s.Length;
+        }
 
         private static bool IsFullyTypedDecimal(string s)
         {
             if(s.NullOrEmpty())
                 return false;
 
-            string[] segments = s.Contains('.') ? s.Split('.') : new string[] { s };
+            var segments = s.Contains('.') ? s.Split('.') : new[] { s };
 
             if(segments.Length > 2 || segments.Length < 1)
             {
@@ -118,12 +128,7 @@ namespace SirRandoo.WheresMyBed.Utils
                 return false;
             }
 
-            if(segments.Length == 2 && (segments[1].Length == 0 || !ContainsOnlyCharacters(s, "0123456789")))
-            {
-                return false;
-            }
-
-            return true;
+            return segments.Length != 2 || (segments[1].Length != 0 && ContainsOnlyCharacters(s, "0123456789"));
         }
 
         private static bool IsPartiallyOrFullTypedDecimal(ref decimal value, string s, decimal min, decimal max)
@@ -158,12 +163,7 @@ namespace SirRandoo.WheresMyBed.Utils
                 return true;
             }
 
-            if(IsFullyTypedDecimal(s))
-            {
-                return true;
-            }
-
-            return false;
+            return IsFullyTypedDecimal(s);
         }
 
         private static void TryParseDecimal(string buffer, ref decimal value, ref string bufferRef, decimal min, decimal max, bool force)
@@ -171,7 +171,7 @@ namespace SirRandoo.WheresMyBed.Utils
             if(buffer.NullOrEmpty())
             {
                 value = min;
-                bufferRef = value.ToString();
+                bufferRef = value.ToString(CultureInfo.InvariantCulture);
             }
             else if(decimal.TryParse(buffer, out var result))
             {
@@ -179,15 +179,15 @@ namespace SirRandoo.WheresMyBed.Utils
 
                 if(value > max)
                 {
-                    Math.Max(value, max);
+                    value = Math.Max(value, max);
                 }
 
-                bufferRef = value.ToString();
+                bufferRef = value.ToString(CultureInfo.InvariantCulture);
             }
             else if(force)
             {
                 value = min;
-                bufferRef = value.ToString();
+                bufferRef = value.ToString(CultureInfo.InvariantCulture);
             }
         }
     }

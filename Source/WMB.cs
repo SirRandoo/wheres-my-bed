@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 
 using HarmonyLib;
 
@@ -8,19 +8,18 @@ using Verse;
 
 namespace SirRandoo.WheresMyBed
 {
-    public class WMB : Mod
+    public class Wmb : Mod
     {
-        public static Settings Settings;
-        internal static Harmony Harmony;
+        private static Settings _settings;
 
-        public WMB(ModContentPack content) : base(content)
+        public Wmb(ModContentPack content) : base(content)
         {
             Log.Message("Where's My Bed :: Have you seen my bed?");
 
-            Harmony = new Harmony("sirrandoo.wmb");
-            Harmony.PatchAll(Assembly.GetExecutingAssembly());
+            var harmony = new Harmony("sirrandoo.wmb");
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            Settings = GetSettings<Settings>();
+            _settings = GetSettings<Settings>();
         }
 
         public override void DoSettingsWindowContents(Rect inRect) => Settings.Draw(inRect);

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
 using UnityEngine;
-
 using Verse;
 
 // Some code was taken from HugsLib (https://github.com/unlimitedhugs/rimworldhugslib). Some code
@@ -13,16 +11,24 @@ namespace SirRandoo.WheresMyBed.Utils
 {
     public static class SettingsHelper
     {
-        public static void BigGap(this Listing listing) => listing.Gap(12f * 3);
+        public static void BigGap(this Listing listing)
+        {
+            listing.Gap(12f * 3);
+        }
 
-        public static void ComboBox(this Listing listing, string label, Type type, ref string value, Action<string> callback, string tooltip = null)
+        public static void ComboBox(this Listing listing,
+            string label,
+            Type type,
+            ref string value,
+            Action<string> callback,
+            string tooltip = null)
         {
             var lineHeight = Text.LineHeight;
             var rect = listing.GetRect(lineHeight);
 
-            if(!tooltip.NullOrEmpty())
+            if (!tooltip.NullOrEmpty())
             {
-                if(Mouse.IsOver(rect))
+                if (Mouse.IsOver(rect))
                 {
                     Widgets.DrawHighlight(rect);
                 }
@@ -34,14 +40,19 @@ namespace SirRandoo.WheresMyBed.Utils
             listing.Gap(listing.verticalSpacing);
         }
 
-        public static void DecimalBox(this Listing listing, string label, ref decimal value, string tooltip = null, decimal min = 0M, decimal max = 1E+09M)
+        public static void DecimalBox(this Listing listing,
+            string label,
+            ref decimal value,
+            string tooltip = null,
+            decimal min = 0M,
+            decimal max = 1E+09M)
         {
             var lineHeight = Text.LineHeight;
             var rect = listing.GetRect(lineHeight);
 
-            if(!tooltip.NullOrEmpty())
+            if (!tooltip.NullOrEmpty())
             {
-                if(Mouse.IsOver(rect))
+                if (Mouse.IsOver(rect))
                 {
                     Widgets.DrawHighlight(rect);
                 }
@@ -59,11 +70,11 @@ namespace SirRandoo.WheresMyBed.Utils
 
             var controlRect = new Rect(rect.x + rect.width - Text.CalcSize(value).x - 24f, rect.y, 60f, 24f);
 
-            if(Widgets.ButtonText(controlRect, value))
+            if (Widgets.ButtonText(controlRect, value))
             {
                 var options = new List<FloatMenuOption>();
 
-                foreach(var name in Enum.GetNames(type))
+                foreach (var name in Enum.GetNames(type))
                 {
                     options.Add(new FloatMenuOption(name, () => callback(name)));
                 }
@@ -72,7 +83,11 @@ namespace SirRandoo.WheresMyBed.Utils
             }
         }
 
-        private static void DrawDecimalBox(Rect rect, string label, ref decimal value, decimal min = 0M, decimal max = 1E+09M)
+        private static void DrawDecimalBox(Rect rect,
+            string label,
+            ref decimal value,
+            decimal min = 0M,
+            decimal max = 1E+09M)
         {
             Widgets.Label(rect, label);
             var controlName = $"TextField{rect.y:F0}{rect.x:F0}";
@@ -81,15 +96,15 @@ namespace SirRandoo.WheresMyBed.Utils
             var buffer = value.ToString(CultureInfo.InvariantCulture);
             var result = GUI.TextField(rect, buffer, Text.CurTextFieldStyle);
 
-            if(GUI.GetNameOfFocusedControl() != controlName)
+            if (GUI.GetNameOfFocusedControl() != controlName)
             {
                 TryParseDecimal(buffer, ref value, ref buffer, min, max, true);
             }
-            else if(result != buffer && IsPartiallyOrFullTypedDecimal(ref value, result, min, max))
+            else if (result != buffer && IsPartiallyOrFullTypedDecimal(ref value, result, min, max))
             {
                 buffer = result;
 
-                if(IsFullyTypedDecimal(result))
+                if (IsFullyTypedDecimal(result))
                 {
                     TryParseDecimal(result, ref value, ref buffer, min, max, false);
                 }
@@ -113,52 +128,54 @@ namespace SirRandoo.WheresMyBed.Utils
 
         private static bool IsFullyTypedDecimal(string s)
         {
-            if(s.NullOrEmpty())
-                return false;
-
-            var segments = s.Contains('.') ? s.Split('.') : new[] { s };
-
-            if(segments.Length > 2 || segments.Length < 1)
+            if (s.NullOrEmpty())
             {
                 return false;
             }
 
-            if(!ContainsOnlyCharacters(segments[0], "-0123456789"))
+            var segments = s.Contains('.') ? s.Split('.') : new[] {s};
+
+            if (segments.Length > 2 || segments.Length < 1)
             {
                 return false;
             }
 
-            return segments.Length != 2 || (segments[1].Length != 0 && ContainsOnlyCharacters(s, "0123456789"));
+            if (!ContainsOnlyCharacters(segments[0], "-0123456789"))
+            {
+                return false;
+            }
+
+            return segments.Length != 2 || segments[1].Length != 0 && ContainsOnlyCharacters(s, "0123456789");
         }
 
         private static bool IsPartiallyOrFullTypedDecimal(ref decimal value, string s, decimal min, decimal max)
         {
-            if(string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
             {
                 return true;
             }
 
-            if(s[0] == '-' && min >= 0M)
+            if (s[0] == '-' && min >= 0M)
             {
                 return false;
             }
 
-            if(s.Length > 1 && s[s.Length - 1] == '-')
+            if (s.Length > 1 && s[s.Length - 1] == '-')
             {
                 return false;
             }
 
-            if(s.Equals("00"))
+            if (s.Equals("00"))
             {
                 return false;
             }
 
-            if(s.Length > 14)
+            if (s.Length > 14)
             {
                 return false;
             }
 
-            if(CharacterCount(s, '.') <= 1 && ContainsOnlyCharacters(s, "-.0123456789"))
+            if (CharacterCount(s, '.') <= 1 && ContainsOnlyCharacters(s, "-.0123456789"))
             {
                 return true;
             }
@@ -166,25 +183,30 @@ namespace SirRandoo.WheresMyBed.Utils
             return IsFullyTypedDecimal(s);
         }
 
-        private static void TryParseDecimal(string buffer, ref decimal value, ref string bufferRef, decimal min, decimal max, bool force)
+        private static void TryParseDecimal(string buffer,
+            ref decimal value,
+            ref string bufferRef,
+            decimal min,
+            decimal max,
+            bool force)
         {
-            if(buffer.NullOrEmpty())
+            if (buffer.NullOrEmpty())
             {
                 value = min;
                 bufferRef = value.ToString(CultureInfo.InvariantCulture);
             }
-            else if(decimal.TryParse(buffer, out var result))
+            else if (decimal.TryParse(buffer, out var result))
             {
                 value = Math.Max(min, result);
 
-                if(value > max)
+                if (value > max)
                 {
                     value = Math.Max(value, max);
                 }
 
                 bufferRef = value.ToString(CultureInfo.InvariantCulture);
             }
-            else if(force)
+            else if (force)
             {
                 value = min;
                 bufferRef = value.ToString(CultureInfo.InvariantCulture);

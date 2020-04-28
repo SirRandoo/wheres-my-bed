@@ -1,15 +1,12 @@
 ﻿using SirRandoo.WheresMyBed.Utils;
-
 using UnityEngine;
-
 using Verse;
 
 namespace SirRandoo.WheresMyBed
 {
     public enum Actions
     {
-        Select,
-        Jump,
+        Select, Jump
         //Arrow 
     }
 
@@ -32,8 +29,18 @@ namespace SirRandoo.WheresMyBed
             panel.Gap();
             panel.Label("WMB.Groups.Gizmo.Label".Translate(), tooltip: "WMB.Groups.Gizmo.Tooltip");
             panel.GapLine();
-            panel.CheckboxLabeled("WMB.Settings.Gizmo.TextEnabled.Label".Translate(), ref ShowGizmoText, "WMB.Settings.Gizmo.TextEnabled.Tooltip".Translate());
-            panel.ComboBox("WMB.Settings.Gizmo.ActionType.Label".Translate(), typeof(Actions), ref GizmoAction, (var) => GizmoAction = var, "WMB.Settings.Gizmo.ActionType.Tooltip".Translate());
+            panel.CheckboxLabeled(
+                "WMB.Settings.Gizmo.TextEnabled.Label".Translate(),
+                ref ShowGizmoText,
+                "WMB.Settings.Gizmo.TextEnabled.Tooltip".Translate()
+            );
+            panel.ComboBox(
+                "WMB.Settings.Gizmo.ActionType.Label".Translate(),
+                typeof(Actions),
+                ref GizmoAction,
+                var => GizmoAction = var,
+                "WMB.Settings.Gizmo.ActionType.Tooltip".Translate()
+            );
 
             panel.EndScrollView(ref view);
         }

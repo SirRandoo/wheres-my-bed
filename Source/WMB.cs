@@ -1,9 +1,6 @@
 ﻿using System.Reflection;
-
 using HarmonyLib;
-
 using UnityEngine;
-
 using Verse;
 
 namespace SirRandoo.WheresMyBed
@@ -22,9 +19,15 @@ namespace SirRandoo.WheresMyBed
             _settings = GetSettings<Settings>();
         }
 
-        public override void DoSettingsWindowContents(Rect inRect) => Settings.Draw(inRect);
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            Settings.Draw(inRect);
+        }
 
-        public override string SettingsCategory() => "Where's My Bed";
+        public override string SettingsCategory()
+        {
+            return "Where's My Bed";
+        }
     }
 
     [StaticConstructorOnStartup]

@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
-
-using UnityEngine;
-
 using Verse;
 
 namespace SirRandoo.WheresMyBed.Patches
@@ -15,48 +12,50 @@ namespace SirRandoo.WheresMyBed.Patches
         [HarmonyPostfix]
         public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)
         {
-            if(__instance?.ownership?.OwnedBed == null)
+            if (__instance?.ownership?.OwnedBed == null)
             {
                 return;
             }
 
-            if(!__instance.IsColonistPlayerControlled)
+            if (!__instance.IsColonistPlayerControlled)
             {
                 return;
             }
 
-            __result = __result.AddItem(new Command_Action
-            {
-                defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
-                defaultDesc = "WMB.Gizmo.Description".Translate(),
-                icon = WmbStatic.GizmoIcon,
-                activateSound = SoundDef.Named("Click"),
-                action = delegate
+            __result = __result.AddItem(
+                new Command_Action
                 {
-                    switch(Settings.GizmoAction)
+                    defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
+                    defaultDesc = "WMB.Gizmo.Description".Translate(),
+                    icon = WmbStatic.GizmoIcon,
+                    activateSound = SoundDef.Named("Click"),
+                    action = delegate
                     {
-                        //case Actions.Arrow:
-                        //    LookTargetsUtility.TryHighlight(__instance.ownership.OwnedBed);
-                        //    break;
+                        switch (Settings.GizmoAction)
+                        {
+                            //case Actions.Arrow:
+                            //    LookTargetsUtility.TryHighlight(__instance.ownership.OwnedBed);
+                            //    break;
 
-                        case "Jump":
-                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed))
-                            {
-                                CameraJumper.TryJump(__instance.ownership.OwnedBed);
-                            }
+                            case "Jump":
+                                if (CameraJumper.CanJump(__instance.ownership.OwnedBed))
+                                {
+                                    CameraJumper.TryJump(__instance.ownership.OwnedBed);
+                                }
 
-                            break;
+                                break;
 
-                        case "Select":
-                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed))
-                            {
-                                CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
-                            }
+                            case "Select":
+                                if (CameraJumper.CanJump(__instance.ownership.OwnedBed))
+                                {
+                                    CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
+                                }
 
-                            break;
+                                break;
+                        }
                     }
                 }
-            });
+            );
         }
     }
 }

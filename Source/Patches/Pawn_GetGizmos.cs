@@ -29,18 +29,26 @@ namespace SirRandoo.WheresMyBed.Patches
                 activateSound = SoundDef.Named("Click"),
                 action = delegate
                 {
-                    switch(Enum.Parse(typeof(Actions), Settings.GizmoAction))
+                    switch(Settings.GizmoAction)
                     {
                         //case Actions.Arrow:
                         //    LookTargetsUtility.TryHighlight(__instance.ownership.OwnedBed);
                         //    break;
 
-                        case Actions.Jump:
-                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed)) CameraJumper.TryJump(__instance.ownership.OwnedBed);
+                        case "Jump":
+                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed))
+                            {
+                                CameraJumper.TryJump(__instance.ownership.OwnedBed);
+                            }
+
                             break;
 
-                        case Actions.Select:
-                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed)) CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
+                        case "Select":
+                            if(CameraJumper.CanJump(__instance.ownership.OwnedBed))
+                            {
+                                CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
+                            }
+
                             break;
                     }
                 }

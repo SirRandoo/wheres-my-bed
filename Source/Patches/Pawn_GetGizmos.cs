@@ -22,7 +22,9 @@ namespace SirRandoo.WheresMyBed.Patches
             }
 
             if(!__instance.IsColonistPlayerControlled)
+            {
                 return;
+            }
 
             __result = __result.AddItem(new Command_Action
             {

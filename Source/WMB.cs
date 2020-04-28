@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 using HarmonyLib;
 
@@ -26,5 +26,11 @@ namespace SirRandoo.WheresMyBed
         public override void DoSettingsWindowContents(Rect inRect) => Settings.Draw(inRect);
 
         public override string SettingsCategory() => "Where's My Bed";
+    }
+
+    [StaticConstructorOnStartup]
+    public static class WmbStatic
+    {
+        internal static Texture2D GizmoIcon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo");
     }
 }

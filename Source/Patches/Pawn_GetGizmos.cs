@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using HarmonyLib;
@@ -24,7 +24,7 @@ namespace SirRandoo.WheresMyBed.Patches
             {
                 defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
                 defaultDesc = "WMB.Gizmo.Description".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo"),
+                icon = WmbStatic.GizmoIcon,
                 activateSound = SoundDef.Named("Click"),
                 action = delegate
                 {

@@ -31,8 +31,8 @@ namespace SirRandoo.WheresMyBed
     [StaticConstructorOnStartup]
     public static class WmbStatic
     {
-        internal static Texture2D GizmoIcon;
-        internal static SoundDef SoundDef;
+        internal static readonly Texture2D GizmoIcon;
+        internal static readonly SoundDef SoundDef;
 
         static WmbStatic()
         {

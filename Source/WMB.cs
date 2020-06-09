@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -31,6 +31,13 @@ namespace SirRandoo.WheresMyBed
     [StaticConstructorOnStartup]
     public static class WmbStatic
     {
-        internal static Texture2D GizmoIcon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo");
+        internal static Texture2D GizmoIcon;
+        internal static SoundDef SoundDef;
+
+        static WmbStatic()
+        {
+            GizmoIcon = ContentFinder<Texture2D>.Get("UI/Icons/WMB_Gizmo");
+            SoundDef = SoundDef.Named("Click");
+        }
     }
 }

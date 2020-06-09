@@ -28,7 +28,7 @@ namespace SirRandoo.WheresMyBed.Patches
                     defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
                     defaultDesc = "WMB.Gizmo.Description".Translate(),
                     icon = WmbStatic.GizmoIcon,
-                    activateSound = SoundDef.Named("Click"),
+                    activateSound = WmbStatic.SoundDef,
                     action = delegate
                     {
                         switch (Settings.GizmoAction)

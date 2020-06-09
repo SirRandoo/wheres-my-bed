@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -11,8 +11,6 @@ namespace SirRandoo.WheresMyBed
 
         public Wmb(ModContentPack content) : base(content)
         {
-            Log.Message("Where's My Bed :: Have you seen my bed?");
-
             var harmony = new Harmony("sirrandoo.wmb");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 

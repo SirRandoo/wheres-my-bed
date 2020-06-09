@@ -19,10 +19,9 @@ namespace SirRandoo.WheresMyBed
 
         public static void Draw(Rect canvas)
         {
+            GUI.BeginGroup(canvas);
             var panel = new Listing_Standard();
-
-            var view = new Rect(0f, 0f, canvas.width, 36f * 26f);
-            view.xMax *= 0.9f;
+            var view = new Rect(0f, 0f, canvas.width * 0.9f, 36f * 26f);
 
             panel.BeginScrollView(canvas, ref _scrollPos, ref view);
 
@@ -42,6 +41,7 @@ namespace SirRandoo.WheresMyBed
                 "WMB.Settings.Gizmo.ActionType.Tooltip".Translate()
             );
 
+            GUI.EndGroup();
             panel.EndScrollView(ref view);
         }
 

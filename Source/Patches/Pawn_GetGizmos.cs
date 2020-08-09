@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
 using Verse;
@@ -34,26 +34,19 @@ namespace SirRandoo.WheresMyBed.Patches
                     activateSound = WmbStatic.SoundDef,
                     action = delegate
                     {
+                        if (!CameraJumper.CanJump(__instance.ownership.OwnedBed))
+                        {
+                            return;
+                        }
+                        
                         switch (Settings.GizmoAction)
                         {
-                            //case Actions.Arrow:
-                            //    LookTargetsUtility.TryHighlight(__instance.ownership.OwnedBed);
-                            //    break;
-
                             case "Jump":
-                                if (CameraJumper.CanJump(__instance.ownership.OwnedBed))
-                                {
-                                    CameraJumper.TryJump(__instance.ownership.OwnedBed);
-                                }
-
+                                CameraJumper.TryJump(__instance.ownership.OwnedBed);
                                 break;
 
                             case "Select":
-                                if (CameraJumper.CanJump(__instance.ownership.OwnedBed))
-                                {
-                                    CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
-                                }
-
+                                CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
                                 break;
                         }
                     }

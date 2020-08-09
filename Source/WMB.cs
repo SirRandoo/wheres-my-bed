@@ -31,6 +31,8 @@ namespace SirRandoo.WheresMyBed
     {
         internal static readonly Texture2D GizmoIcon;
         internal static readonly SoundDef SoundDef;
+        internal static string GizmoLabel;
+        internal static string GizmoDescription;
 
         static WmbStatic()
         {

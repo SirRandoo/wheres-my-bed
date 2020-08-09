@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
 using Verse;
@@ -17,16 +17,14 @@ namespace SirRandoo.WheresMyBed.Patches
                 return;
             }
 
-            if (!__instance.IsColonistPlayerControlled)
-            {
-                return;
-            }
+            WmbStatic.GizmoLabel ??= "WMB.Gizmo.Label".TranslateSimple();
+            WmbStatic.GizmoDescription ??= "WMB.Gizmo.Description".TranslateSimple();
 
             __result = __result.AddItem(
                 new Command_Action
                 {
-                    defaultLabel = Settings.ShowGizmoText ? "WMB.Gizmo.Label".Translate() : null,
-                    defaultDesc = "WMB.Gizmo.Description".Translate(),
+                    defaultLabel = Settings.ShowGizmoText ? WmbStatic.GizmoLabel : null,
+                    defaultDesc = WmbStatic.GizmoDescription,
                     icon = WmbStatic.GizmoIcon,
                     activateSound = WmbStatic.SoundDef,
                     action = delegate

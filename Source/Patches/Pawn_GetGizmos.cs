@@ -12,7 +12,12 @@ namespace SirRandoo.WheresMyBed.Patches
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)
         {
-            if (__instance?.ownership?.OwnedBed == null)
+            if (!__instance?.IsColonistPlayerControlled ?? true)
+            {
+                return;
+            }
+            
+            if (__instance.ownership?.OwnedBed == null)
             {
                 return;
             }

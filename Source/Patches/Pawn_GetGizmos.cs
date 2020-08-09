@@ -6,10 +6,10 @@ using Verse;
 namespace SirRandoo.WheresMyBed.Patches
 {
     [HarmonyPatch(typeof(Pawn), "GetGizmos")]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class PawnGetGizmos
     {
         [HarmonyPostfix]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)
         {
             if (__instance?.ownership?.OwnedBed == null)

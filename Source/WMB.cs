@@ -7,14 +7,12 @@ namespace SirRandoo.WheresMyBed
 {
     public class Wmb : Mod
     {
-        private static Settings _settings;
-
         public Wmb(ModContentPack content) : base(content)
         {
             var harmony = new Harmony("sirrandoo.wmb");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            _settings = GetSettings<Settings>();
+            GetSettings<Settings>();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)

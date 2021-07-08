@@ -12,8 +12,6 @@ namespace SirRandoo.WheresMyBed
 
     public class Settings : ModSettings
     {
-        private static Vector2 _scrollPos = Vector2.zero;
-
         public static bool ShowGizmoText = true;
         public static string GizmoAction = Actions.Select.ToString();
 
@@ -21,18 +19,10 @@ namespace SirRandoo.WheresMyBed
         {
             GUI.BeginGroup(canvas);
             var panel = new Listing_Standard();
-            var view = new Rect(0f, 0f, canvas.width * 0.9f, 36f * 26f);
+            panel.Begin(canvas);
 
-            panel.BeginScrollView(canvas, ref _scrollPos, ref view);
-
-            panel.Gap();
             panel.Label("WMB.Groups.Gizmo.Label".Translate(), tooltip: "WMB.Groups.Gizmo.Tooltip");
             panel.GapLine();
-            panel.CheckboxLabeled(
-                "WMB.Settings.Gizmo.TextEnabled.Label".Translate(),
-                ref ShowGizmoText,
-                "WMB.Settings.Gizmo.TextEnabled.Tooltip".Translate()
-            );
             panel.ComboBox(
                 "WMB.Settings.Gizmo.ActionType.Label".Translate(),
                 typeof(Actions),
@@ -40,9 +30,14 @@ namespace SirRandoo.WheresMyBed
                 var => GizmoAction = var,
                 "WMB.Settings.Gizmo.ActionType.Tooltip".Translate()
             );
+            panel.CheckboxLabeled(
+                "WMB.Settings.Gizmo.TextEnabled.Label".Translate(),
+                ref ShowGizmoText,
+                "WMB.Settings.Gizmo.TextEnabled.Tooltip".Translate()
+            );
 
+            panel.End();
             GUI.EndGroup();
-            panel.EndScrollView(ref view);
         }
 
         public override void ExposeData()

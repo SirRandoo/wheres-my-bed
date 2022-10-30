@@ -12,6 +12,7 @@ Global
 		RimWorld 1.1|Any CPU = RimWorld 1.1|Any CPU
 		RimWorld 1.2|Any CPU = RimWorld 1.2|Any CPU
 		RimWorld 1.3|Any CPU = RimWorld 1.3|Any CPU
+		RimWorld 1.4|Any CPU = RimWorld 1.4|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CC264B07-EB02-4344-8F7D-40DA00F0DC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,6 +25,8 @@ Global
 		{CC264B07-EB02-4344-8F7D-40DA00F0DC94}.RimWorld 1.2|Any CPU.Build.0 = RimWorld 1.2|Any CPU
 		{CC264B07-EB02-4344-8F7D-40DA00F0DC94}.RimWorld 1.3|Any CPU.ActiveCfg = RimWorld 1.3|Any CPU
 		{CC264B07-EB02-4344-8F7D-40DA00F0DC94}.RimWorld 1.3|Any CPU.Build.0 = RimWorld 1.3|Any CPU
+		{CC264B07-EB02-4344-8F7D-40DA00F0DC94}.RimWorld 1.4|Any CPU.ActiveCfg = RimWorld 1.4|Any CPU
+		{CC264B07-EB02-4344-8F7D-40DA00F0DC94}.RimWorld 1.4|Any CPU.Build.0 = RimWorld 1.4|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

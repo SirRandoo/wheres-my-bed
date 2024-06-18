@@ -1,113 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC264B07-EB02-4344-8F7D-40DA00F0DC94}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SirRandoo.WheresMyBed</RootNamespace>
-    <AssemblyName>Where%27s My Bed</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <LangVersion>8</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\Assemblies\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Assemblies\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>2</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RimWorld 1.1|AnyCPU'">
-    <OutputPath>..\1.1\Assemblies\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <WarningLevel>2</WarningLevel>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>8</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RimWorld 1.2|AnyCPU' ">
-    <OutputPath>..\1.2\Assemblies</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <WarningLevel>2</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RimWorld 1.3|AnyCPU' ">
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <WarningLevel>2</WarningLevel>
-    <OutputPath>..\1.3\Assemblies\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RimWorld 1.4|AnyCPU' ">
-    <OutputPath>..\1.4\Assemblies</OutputPath>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Patches\Pawn_GetGizmos.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Utils\SettingsHelper.cs" />
-    <Compile Include="WMB.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\About\About.xml">
-      <Link>About\About.xml</Link>
-    </Content>
-    <Content Include="..\About\Manifest.xml">
-      <Link>About\Manifest.xml</Link>
-    </Content>
-    <Content Include="..\About\Preview.png">
-      <Link>About\Preview.png</Link>
-    </Content>
-    <Content Include="..\About\PublishedFileId.txt">
-      <Link>About\PublishedFileId.txt</Link>
-    </Content>
-    <Content Include="..\Common\Languages\English\Keyed\WMB.xml">
-      <Link>Common\Languages\English\Keyed\WMB.xml</Link>
-    </Content>
-    <Content Include="..\Common\Textures\UI\Icons\WMB_Gizmo.png">
-      <Link>Common\Textures\UI\Icons\WMB_Gizmo.png</Link>
-    </Content>
-    <Content Include="..\LoadFolders.xml">
-      <Link>LoadFolders.xml</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3531" />
-    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <LangVersion>preview</LangVersion>
+        <TargetFramework>net48</TargetFramework>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <RootNamespace>SirRandoo.WheresMyBed</RootNamespace>
+    </PropertyGroup>
+
+    <!-- Product Information -->
+    <PropertyGroup>
+        <Authors>SirRandoo</Authors>
+        <Product>Where's My Bed</Product>
+        <Copyright>Copyright (c) $([System.DateTime]::Now.ToString("yyyy")) SirRandoo</Copyright>
+        <Description>A mod for the game "RimWorld" that gives players a way to find a pawn's assigned bed.</Description>
+
+        <RepositoryUrl>https://github.com/sirrandoo/wheres-my-bed</RepositoryUrl>
+        <PackageProjectUrl>https://docs.github.com/sirrandoo/wheres-my-bed</PackageProjectUrl>
+    </PropertyGroup>
+
+    <!-- Package Information -->
+    <PropertyGroup>
+        <Version>1.3.0</Version>
+    </PropertyGroup>
+
+    <!-- Licensing -->
+    <PropertyGroup>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+    <ItemGroup>
+        <Content Include="..\About\About.xml">
+            <Link>About\About.xml</Link>
+        </Content>
+        <Content Include="..\About\Preview.png">
+            <Link>About\Preview.png</Link>
+        </Content>
+        <Content Include="..\About\PublishedFileId.txt">
+            <Link>About\PublishedFileId.txt</Link>
+        </Content>
+        <Content Include="..\Common\Languages\English\Keyed\WMB.xml">
+            <Link>Common\Languages\English\Keyed\WMB.xml</Link>
+        </Content>
+        <Content Include="..\Common\Textures\UI\Icons\WMB_Gizmo.png">
+            <Link>Common\Textures\UI\Icons\WMB_Gizmo.png</Link>
+        </Content>
+        <Content Include="..\LoadFolders.xml">
+            <Link>LoadFolders.xml</Link>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Lib.Harmony" Version="2.3.3" />
+        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" />
+        <PackageReference Include="NetEscapades.EnumGenerators" Version="1.0.0-beta09" />
+    </ItemGroup>
 </Project>

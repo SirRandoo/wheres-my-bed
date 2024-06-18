@@ -1,57 +1,52 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
+using JetBrains.Annotations;
 using Verse;
 
-namespace SirRandoo.WheresMyBed.Patches
+namespace SirRandoo.WheresMyBed.Patches;
+
+[PublicAPI]
+[HarmonyPatch(typeof(Pawn), "GetGizmos")]
+internal static class PawnGetGizmos
 {
-    [HarmonyPatch(typeof(Pawn), "GetGizmos")]
-    public static class PawnGetGizmos
+    [HarmonyPostfix]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public static void GetGizmos(Pawn? __instance, ref IEnumerable<Gizmo> __result)
     {
-        [HarmonyPostfix]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public static void GetGizmos(Pawn __instance, ref IEnumerable<Gizmo> __result)
+        if (__instance is not { IsColonistPlayerControlled: true, ownership.OwnedBed: not null })
         {
-            if (!__instance?.IsColonistPlayerControlled ?? true)
-            {
-                return;
-            }
-            
-            if (__instance.ownership?.OwnedBed == null)
-            {
-                return;
-            }
+            return;
+        }
 
-            WmbStatic.GizmoLabel ??= "WMB.Gizmo.Label".TranslateSimple();
-            WmbStatic.GizmoDescription ??= "WMB.Gizmo.Description".TranslateSimple();
-
-            __result = __result.AddItem(
-                new Command_Action
+        __result = __result.AddItem(
+            new Command_Action
+            {
+                defaultLabel = Settings.ShowGizmoText ? WmbStatic.GizmoLabel : null,
+                defaultDesc = WmbStatic.GizmoDescription,
+                icon = WmbStatic.GizmoIcon,
+                activateSound = WmbStatic.SoundDef,
+                action = delegate
                 {
-                    defaultLabel = Settings.ShowGizmoText ? WmbStatic.GizmoLabel : null,
-                    defaultDesc = WmbStatic.GizmoDescription,
-                    icon = WmbStatic.GizmoIcon,
-                    activateSound = WmbStatic.SoundDef,
-                    action = delegate
+                    if (!CameraJumper.CanJump(__instance.ownership.OwnedBed))
                     {
-                        if (!CameraJumper.CanJump(__instance.ownership.OwnedBed))
-                        {
-                            return;
-                        }
-                        
-                        switch (Settings.GizmoAction)
-                        {
-                            case "Jump":
-                                CameraJumper.TryJump(__instance.ownership.OwnedBed);
-                                break;
+                        return;
+                    }
 
-                            case "Select":
-                                CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
-                                break;
-                        }
+                    switch (Settings.GizmoAction)
+                    {
+                        case Actions.Jump:
+                            CameraJumper.TryJump(__instance.ownership.OwnedBed);
+
+                            break;
+
+                        case Actions.Select:
+                            CameraJumper.TryJumpAndSelect(__instance.ownership.OwnedBed);
+
+                            break;
                     }
                 }
-            );
-        }
+            }
+        );
     }
 }

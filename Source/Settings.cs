@@ -1,49 +1,68 @@
-﻿using SirRandoo.WheresMyBed.Utils;
+﻿using NetEscapades.EnumGenerators;
 using UnityEngine;
 using Verse;
 
-namespace SirRandoo.WheresMyBed
+namespace SirRandoo.WheresMyBed;
+
+[EnumExtensions]
+public enum Actions
 {
-    public enum Actions
+    Select, Jump
+
+    //Arrow
+}
+
+public class Settings : ModSettings
+{
+    public static bool ShowGizmoText = true;
+    public static Actions GizmoAction = Actions.Select;
+    private static string _gizmoActionString = GizmoAction.ToStringFast();
+
+    public static void Draw(Rect canvas)
     {
-        Select, Jump
-        //Arrow 
+        GUI.BeginGroup(canvas);
+
+        var panel = new Listing_Standard();
+        panel.Begin(canvas);
+
+        Rect actionTypeRegion = panel.GetRect(UiConstants.LineHeight);
+        (Rect labelRegion, Rect fieldRegion) = actionTypeRegion.Split();
+
+        LabelDrawer.DrawLabel(labelRegion, "WMB.Settings.Gizmo.ActionType.Label".TranslateSimple());
+        TooltipHandler.TipRegion(actionTypeRegion, "WMB.Settings.Gizmo.ActionTYpe.Tooltip".TranslateSimple());
+
+        DropdownDrawer.Draw(
+            fieldRegion,
+            GizmoAction,
+            WmbStatic.GizmoActions,
+            actions =>
+            {
+                GizmoAction = actions;
+                _gizmoActionString = actions.ToStringFast();
+            }
+        );
+
+
+        Rect textEnabledRegion = panel.GetRect(UiConstants.LineHeight);
+        (Rect textLabelRegion, Rect textFieldRegion) = textEnabledRegion.Split();
+
+        LabelDrawer.DrawLabel(textLabelRegion, "WMB.Settings.Gizmo.TextEnabled.Label".TranslateSimple());
+        TooltipHandler.TipRegion(textEnabledRegion, "WMB.Settings.Gizmo.TextEnabled.Tooltip".TranslateSimple());
+
+        CheckboxDrawer.DrawCheckbox(textFieldRegion, ref ShowGizmoText);
+
+        panel.End();
+        GUI.EndGroup();
     }
 
-    public class Settings : ModSettings
+    public override void ExposeData()
     {
-        public static bool ShowGizmoText = true;
-        public static string GizmoAction = Actions.Select.ToString();
+        Scribe_Values.Look(ref ShowGizmoText, "drawText", true);
+        Scribe_Values.Look(ref _gizmoActionString, "action", Actions.Select.ToStringFast());
 
-        public static void Draw(Rect canvas)
+        if (Scribe.mode == LoadSaveMode.PostLoadInit && !ActionsExtensions.TryParse(_gizmoActionString, out GizmoAction))
         {
-            GUI.BeginGroup(canvas);
-            var panel = new Listing_Standard();
-            panel.Begin(canvas);
-
-            panel.Label("WMB.Groups.Gizmo.Label".Translate(), tooltip: "WMB.Groups.Gizmo.Tooltip");
-            panel.GapLine();
-            panel.ComboBox(
-                "WMB.Settings.Gizmo.ActionType.Label".Translate(),
-                typeof(Actions),
-                ref GizmoAction,
-                var => GizmoAction = var,
-                "WMB.Settings.Gizmo.ActionType.Tooltip".Translate()
-            );
-            panel.CheckboxLabeled(
-                "WMB.Settings.Gizmo.TextEnabled.Label".Translate(),
-                ref ShowGizmoText,
-                "WMB.Settings.Gizmo.TextEnabled.Tooltip".Translate()
-            );
-
-            panel.End();
-            GUI.EndGroup();
-        }
-
-        public override void ExposeData()
-        {
-            Scribe_Values.Look(ref ShowGizmoText, "drawText", true);
-            Scribe_Values.Look(ref GizmoAction, "action", Actions.Select.ToString());
+            GizmoAction = Actions.Select;
         }
     }
 }
